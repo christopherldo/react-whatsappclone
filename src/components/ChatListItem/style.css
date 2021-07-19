@@ -4,6 +4,11 @@
     display: flex;
     cursor: pointer;
     align-items: center;
+    transition: all 0.3s ease-in-out 0s;
+}
+
+.chatListItem:hover {
+    background-color: #f5f5f5;
 }
 
 .chatListItem--avatar {
@@ -13,6 +18,8 @@
 }
 
 .chatListItem--lines {
+    min-width: 0;
+    height: 100%;
     flex: 1;
     display: flex;
     flex-flow: column;
@@ -43,4 +50,11 @@
     color: #999;
     display: flex;
     width: 100%;
+}
+
+.chatListItem--lastMsg p {
+    margin: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }

@@ -13,7 +13,7 @@ const ChatListItem = () => (
       <div className="chatListItem--line">
         <div className="chatListItem--name">Christopher de Oliveira</div>
 
-        <div className="chatListItem--date">19:00</div>
+        <div className="chatListItem--date">18:00</div>
       </div>
 
       <div className="chatListItem--line">
