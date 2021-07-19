@@ -79,6 +79,12 @@ header {
   margin-left: 10px;
 }
 
+.chatlist {
+  flex: 1;
+  background-color: #fff;
+  overflow-y: auto;
+}
+
 /* .contentarea {
 
 } */
