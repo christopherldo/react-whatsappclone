@@ -13,3 +13,45 @@ body {
   height: 100vh;
   background-color: #ededed;
 }
+
+.sidebar {
+  width: 35%;
+  max-width: 415px;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #ddd;
+}
+
+header {
+  height: 60px;
+  padding: 0px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header--avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.header--buttons {
+  display: flex;
+}
+
+.header--btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #919191;
+  cursor: pointer;
+}
+
+/* .contentarea {
+
+} */
