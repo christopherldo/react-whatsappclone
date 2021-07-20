@@ -43,6 +43,8 @@
     align-items: center;
     cursor: pointer;
     margin: 2px;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out 0s;
 }
 
 .chatWindow--btn svg {
@@ -88,4 +90,18 @@
 .chatWindow--pos {
     display: flex;
     margin-left: 15px;
+}
+
+.chatWindow--emojiarea {
+    overflow-y: hidden;
+    transition: all 0.3s ease-in-out 0s;
+}
+
+aside.emoji-picker-react {
+    width: auto;
+    background: none;
+}
+
+.emoji-picker-react .emoji-group::before {
+    background: none;
 }
