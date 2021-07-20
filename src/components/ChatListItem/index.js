@@ -2,17 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './style.css';
 
-const ChatListItem = ({ onClick, selected }) => (
-  <button type="button" className="chatListItem" onClick={onClick} role="row" aria-selected={selected}>
+const ChatListItem = ({ data, onClick, active }) => (
+  <button type="button" className="chatListItem" onClick={onClick} role="row" aria-selected={active}>
     <img
       className="chatListItem--avatar"
-      src="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg"
-      alt="Avatar"
+      src={data.image}
+      alt={data.title}
     />
 
     <div className="chatListItem--lines">
       <div className="chatListItem--line">
-        <div className="chatListItem--name">Christopher de Oliveira</div>
+        <div className="chatListItem--name">{data.title}</div>
 
         <div className="chatListItem--date">18:00</div>
       </div>
@@ -27,8 +27,12 @@ const ChatListItem = ({ onClick, selected }) => (
 );
 
 ChatListItem.propTypes = {
+  data: PropTypes.shape({
+    image: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+  }).isRequired,
   onClick: PropTypes.func.isRequired,
-  selected: PropTypes.bool.isRequired,
+  active: PropTypes.bool.isRequired,
 };
 
 export default ChatListItem;

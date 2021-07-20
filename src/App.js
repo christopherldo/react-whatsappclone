@@ -83,8 +83,9 @@ const App = () => {
           {chatList.map((item) => (
             <ChatListItem
               key={item.id}
+              data={item}
               onClick={() => setActiveChat(item)}
-              selected={activeChat.id === item.id}
+              active={activeChat.id === item.id}
             />
           ))}
         </div>
