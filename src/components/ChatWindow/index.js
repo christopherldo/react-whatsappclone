@@ -4,6 +4,10 @@ import './style.css';
 import SearchIcon from '@material-ui/icons/Search';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+// import CloseIcon from '@material-ui/icons/Close';
+import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
+// import MicIcon from '@material-ui/icons/Mic';
+import SendIcon from '@material-ui/icons/Send';
 
 const ChatWindow = () => (
   <div className="chatWindow">
@@ -35,7 +39,27 @@ const ChatWindow = () => (
 
     <div className="chatWindow--body">...</div>
 
-    <div className="chatWindow--footer">...</div>
+    <div className="chatWindow--footer">
+      <div className="chatWindow--pre">
+        <div className="chatWindow--btn">
+          <InsertEmoticonIcon />
+        </div>
+      </div>
+
+      <div className="chatWindow--inputarea">
+        <input
+          type="text"
+          className="chatWindow--input"
+          placeholder="Digite uma mensagem"
+        />
+      </div>
+
+      <div className="chatWindow--pos">
+        <div className="chatWindow--btn">
+          <SendIcon />
+        </div>
+      </div>
+    </div>
   </div>
 );
 
