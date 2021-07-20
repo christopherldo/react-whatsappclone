@@ -5,23 +5,41 @@ import DonutLargeIcon from '@material-ui/icons/DonutLarge';
 import ChatIcon from '@material-ui/icons/Chat';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import SearchIcon from '@material-ui/icons/Search';
+
 import ChatListItem from './components/ChatListItem';
+import ChatIntro from './components/ChatIntro';
+import ChatWindow from './components/ChatWindow';
 
 const App = () => {
   const [chatList, setChatList] = useState([]);
+  const [activeChat, setActiveChat] = useState({});
 
   useEffect(() => {
     setChatList([
-      { id: 1 },
-      { id: 2 },
-      { id: 3 },
-      { id: 4 },
-      { id: 5 },
-      { id: 6 },
-      { id: 7 },
-      { id: 8 },
-      { id: 9 },
-      { id: 10 },
+      {
+        id: 1,
+        title: 'Fulano de Tal',
+        image:
+          'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg',
+      },
+      {
+        id: 2,
+        title: 'Fulano de Tal',
+        image:
+          'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg',
+      },
+      {
+        id: 3,
+        title: 'Fulano de Tal',
+        image:
+          'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg',
+      },
+      {
+        id: 4,
+        title: 'Fulano de Tal',
+        image:
+          'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg',
+      },
     ]);
   }, []);
 
@@ -63,12 +81,18 @@ const App = () => {
 
         <div className="chatlist">
           {chatList.map((item) => (
-            <ChatListItem key={item.id} />
+            <ChatListItem
+              key={item.id}
+              onClick={() => setActiveChat(item)}
+              selected={activeChat.id === item.id}
+            />
           ))}
         </div>
       </div>
 
-      <div className="contentarea">...</div>
+      <div className="contentarea">
+        {activeChat.id ? <ChatWindow /> : <ChatIntro />}
+      </div>
     </div>
   );
 };
