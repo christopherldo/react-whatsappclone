@@ -51,6 +51,7 @@ header {
   align-items: center;
   color: #919191;
   cursor: pointer;
+  border: 0;
 }
 
 .search {

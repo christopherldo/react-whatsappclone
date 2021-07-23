@@ -143,18 +143,17 @@ const ChatWindow = ({ user }) => {
 
       <div className="chatWindow--footer">
         <div className="chatWindow--pre">
-          <div
-            role="button"
+          <button
+            type="button"
             className="chatWindow--btn"
             onClick={() => setEmojiOpen(false)}
             style={{ width: emojiOpen ? '40px' : '0px' }}
-            aria-hidden="true"
           >
             <CloseIcon />
-          </div>
+          </button>
 
-          <div
-            role="button"
+          <button
+            type="button"
             className="chatWindow--btn"
             onClick={() => setEmojiOpen(true)}
             aria-hidden="true"
@@ -162,7 +161,7 @@ const ChatWindow = ({ user }) => {
             <InsertEmoticonIcon
               style={{ color: emojiOpen ? '#009688' : '#919191' }}
             />
-          </div>
+          </button>
         </div>
 
         <div className="chatWindow--inputarea">
@@ -178,14 +177,14 @@ const ChatWindow = ({ user }) => {
         <div className="chatWindow--pos">
           {text
             ? (
-              <div onClick={handleSendClick} className="chatWindow--btn" aria-hidden="true">
+              <button type="button" onClick={handleSendClick} className="chatWindow--btn">
                 <SendIcon />
-              </div>
+              </button>
             )
             : (
-              <div onClick={handleMicClick} className="chatWindow--btn" aria-hidden="true">
+              <button type="button" onClick={handleMicClick} className="chatWindow--btn">
                 <MicIcon style={{ color: listening ? '#126ece' : '#919191' }} />
-              </div>
+              </button>
             )}
         </div>
       </div>
