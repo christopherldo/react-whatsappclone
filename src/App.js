@@ -13,6 +13,7 @@ import ChatWindow from './components/ChatWindow';
 const App = () => {
   const [chatList, setChatList] = useState([]);
   const [activeChat, setActiveChat] = useState({});
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     setChatList([
@@ -41,6 +42,12 @@ const App = () => {
           'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg',
       },
     ]);
+
+    setUser({
+      id: 1234,
+      name: 'Christopher de Oliveira',
+      avatar: 'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg',
+    });
   }, []);
 
   return (
@@ -49,7 +56,7 @@ const App = () => {
         <header>
           <img
             className="header--avatar"
-            src="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg"
+            src={user.avatar}
             alt="Avatar"
           />
 
@@ -92,7 +99,7 @@ const App = () => {
       </div>
 
       <div className="contentarea">
-        {activeChat.id ? <ChatWindow /> : <ChatIntro />}
+        {activeChat.id ? <ChatWindow user={user} /> : <ChatIntro />}
       </div>
     </div>
   );

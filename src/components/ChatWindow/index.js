@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import EmojiPicker from 'emoji-picker-react';
 import './style.css';
 
@@ -12,10 +13,12 @@ import SendIcon from '@material-ui/icons/Send';
 
 import MessageItem from '../MessageItem';
 
-const ChatWindow = () => {
+const ChatWindow = ({ user }) => {
   let recognition;
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (SpeechRecognition) recognition = new SpeechRecognition();
+
+  const body = useRef();
 
   const [emojiOpen, setEmojiOpen] = useState(false);
   const [text, setText] = useState('');
@@ -37,11 +40,34 @@ const ChatWindow = () => {
 
   useEffect(() => {
     setList([
-      { id: 1 },
-      { id: 2 },
-      { id: 3 },
+      { id: 1, body: 'Aopa', author: 123 },
+      { id: 2, body: 'Bão?', author: 123 },
+      { id: 3, body: 'Bão demais sô', author: 1234 },
+      { id: 4, body: 'Aopa', author: 123 },
+      { id: 5, body: 'Bão?', author: 123 },
+      { id: 6, body: 'Bão demais sô', author: 1234 },
+      { id: 7, body: 'Aopa', author: 123 },
+      { id: 8, body: 'Bão?', author: 123 },
+      { id: 9, body: 'Bão demais sô', author: 1234 },
+      { id: 10, body: 'Aopa', author: 123 },
+      { id: 11, body: 'Bão?', author: 123 },
+      { id: 12, body: 'Bão demais sô', author: 1234 },
+      { id: 13, body: 'Aopa', author: 123 },
+      { id: 14, body: 'Bão?', author: 123 },
+      { id: 15, body: 'Bão demais sô', author: 1234 },
+      { id: 16, body: 'Aopa', author: 123 },
+      { id: 17, body: 'Bão?', author: 123 },
+      { id: 18, body: 'Bão demais sô', author: 1234 },
+      { id: 19, body: 'Aopa', author: 123 },
+      { id: 20, body: 'Bão?', author: 123 },
     ]);
   }, []);
+
+  useEffect(() => {
+    if (body.current.scrollHeight > body.current.offsetHeight) {
+      body.current.scrollTop = body.current.scrollHeight - body.current.offsetHeight;
+    }
+  }, [list]);
 
   const handleMicClick = () => {
     if (recognition) {
@@ -98,9 +124,9 @@ const ChatWindow = () => {
         </div>
       </div>
 
-      <div className="chatWindow--body">
+      <div ref={body} className="chatWindow--body">
         {list.map((item) => (
-          <MessageItem key={item.id} data={item} />
+          <MessageItem key={item.id} data={item} user={user} />
         ))}
       </div>
 
@@ -165,6 +191,10 @@ const ChatWindow = () => {
       </div>
     </div>
   );
+};
+
+ChatWindow.propTypes = {
+  user: PropTypes.shape({}).isRequired,
 };
 
 export default ChatWindow;
