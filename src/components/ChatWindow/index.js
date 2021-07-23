@@ -10,6 +10,8 @@ import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
 import MicIcon from '@material-ui/icons/Mic';
 import SendIcon from '@material-ui/icons/Send';
 
+import MessageItem from '../MessageItem';
+
 const ChatWindow = () => {
   let recognition;
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -19,6 +21,7 @@ const ChatWindow = () => {
   const [text, setText] = useState('');
   const [listening, setListening] = useState(false);
   const [textPlaceholder, setTextPlaceholder] = useState('');
+  const [list, setList] = useState([]);
 
   const handleEmojiClick = (e, emojiObject) => {
     setText(text + emojiObject.emoji);
@@ -31,6 +34,14 @@ const ChatWindow = () => {
   useEffect(() => {
     if (text === '') setTextPlaceholder('Digite uma mensagem');
   }, [text]);
+
+  useEffect(() => {
+    setList([
+      { id: 1 },
+      { id: 2 },
+      { id: 3 },
+    ]);
+  }, []);
 
   const handleMicClick = () => {
     if (recognition) {
@@ -87,7 +98,11 @@ const ChatWindow = () => {
         </div>
       </div>
 
-      <div className="chatWindow--body">...</div>
+      <div className="chatWindow--body">
+        {list.map((item) => (
+          <MessageItem key={item.id} data={item} />
+        ))}
+      </div>
 
       <div
         className="chatWindow--emojiarea"
