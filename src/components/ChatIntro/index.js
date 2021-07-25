@@ -21,6 +21,16 @@ const ChatIntro = () => (
         @christopherldo
       </a>
     </h2>
+
+    <h2>
+      <a
+        href="https://github.com/christopherldo/react-whatsappclone"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Link para o projeto no Github
+      </a>
+    </h2>
   </div>
 );
 

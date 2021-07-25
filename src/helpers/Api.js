@@ -39,31 +39,52 @@ const functions = {
       }
     });
 
+    list.sort((a, b) => a.name.localeCompare(b.name));
+
     return list;
   },
-  async addNewChat(user, userChat) {
-    const newChat = await db.collection('chats').add({
-      messages: [],
-      users: [user.id, userChat.id],
-    });
+  async addNewChat(user, userChat, setActiveChat) {
+    const result = await db.collection('users').doc(user.id).get();
 
-    db.collection('users').doc(user.id).update({
-      chats: firebase.firestore.FieldValue.arrayUnion({
+    if (result.exists) {
+      const data = result.data();
+      const chat = data.chats.find((chatObject) => chatObject.with === userChat.id);
+
+      if (chat) {
+        setActiveChat(chat);
+        return;
+      }
+
+      const newChat = await db.collection('chats').add({
+        messages: [],
+        users: [user.id, userChat.id],
+      });
+
+      db.collection('users').doc(user.id).update({
+        chats: firebase.firestore.FieldValue.arrayUnion({
+          chat_id: newChat.id,
+          title: userChat.name,
+          image: userChat.avatar,
+          with: userChat.id,
+        }),
+      });
+
+      db.collection('users').doc(userChat.id).update({
+        chats: firebase.firestore.FieldValue.arrayUnion({
+          chat_id: newChat.id,
+          title: user.name,
+          image: user.avatar,
+          with: user.id,
+        }),
+      });
+
+      setActiveChat({
         chat_id: newChat.id,
         title: userChat.name,
         image: userChat.avatar,
         with: userChat.id,
-      }),
-    });
-
-    db.collection('users').doc(userChat.id).update({
-      chats: firebase.firestore.FieldValue.arrayUnion({
-        chat_id: newChat.id,
-        title: user.name,
-        image: user.avatar,
-        with: user.id,
-      }),
-    });
+      });
+    }
   },
   onChatList(userId, setChatList) {
     return db.collection('users').doc(userId).onSnapshot((doc) => {
@@ -80,7 +101,7 @@ const functions = {
             return a.last_message_date.seconds < b.last_message_date.seconds ? 1 : -1;
           });
 
-          setChatList(data.chats);
+          setChatList(chats);
         }
       }
     });

@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
-import DonutLargeIcon from '@material-ui/icons/DonutLarge';
 import ChatIcon from '@material-ui/icons/Chat';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import SearchIcon from '@material-ui/icons/Search';
 
 import ChatListItem from './components/ChatListItem';
 import ChatIntro from './components/ChatIntro';
@@ -36,63 +33,54 @@ const App = () => {
 
   return (
     <>
-      {user
-        ? (
-          <div className="app-window">
-            <div className="sidebar">
-              <NewChat user={user} show={showNewChat} setShow={setShowNewChat} />
+      {user ? (
+        <div className="app-window">
+          <div className="sidebar">
+            <NewChat
+              user={user}
+              show={showNewChat}
+              setShow={setShowNewChat}
+              chatList={chatList}
+              setActiveChat={setActiveChat}
+            />
 
-              <header>
-                <img
-                  className="header--avatar"
-                  src={user.avatar}
-                  alt="Avatar"
+            <header>
+              <img className="header--avatar" src={user.avatar} alt="Avatar" />
+
+              <div className="header--buttons">
+                <button
+                  type="button"
+                  className="header--btn"
+                  onClick={() => setShowNewChat(true)}
+                >
+                  <ChatIcon />
+                </button>
+              </div>
+            </header>
+
+            <div className="chatlist">
+              {chatList.map((item) => (
+                <ChatListItem
+                  key={item.chat_id}
+                  data={item}
+                  onClick={() => setActiveChat(item)}
+                  active={activeChat?.chat_id === item.chat_id}
                 />
-
-                <div className="header--buttons">
-                  <button type="button" className="header--btn">
-                    <DonutLargeIcon />
-                  </button>
-
-                  <button type="button" className="header--btn" onClick={() => setShowNewChat(true)}>
-                    <ChatIcon />
-                  </button>
-
-                  <button type="button" className="header--btn">
-                    <MoreVertIcon />
-                  </button>
-                </div>
-              </header>
-
-              <div className="search">
-                <div className="search--input">
-                  <SearchIcon />
-
-                  <input
-                    type="search"
-                    placeholder="Procurar ou começar uma nova conversa"
-                  />
-                </div>
-              </div>
-
-              <div className="chatlist">
-                {chatList.map((item) => (
-                  <ChatListItem
-                    key={item.chat_id}
-                    data={item}
-                    onClick={() => setActiveChat(item)}
-                    active={activeChat?.id === item.id}
-                  />
-                ))}
-              </div>
-            </div>
-
-            <div className="contentarea">
-              {activeChat ? <ChatWindow user={user} data={activeChat} /> : <ChatIntro />}
+              ))}
             </div>
           </div>
-        )
-        : <Login onReceive={handleLoginData} />}
+
+          <div className="contentarea">
+            {activeChat ? (
+              <ChatWindow user={user} data={activeChat} />
+            ) : (
+              <ChatIntro />
+            )}
+          </div>
+        </div>
+      ) : (
+        <Login onReceive={handleLoginData} />
+      )}
     </>
   );
 };
