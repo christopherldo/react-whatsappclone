@@ -4,36 +4,20 @@ import './style.css';
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
-const NewChat = ({ /* user , */ show, setShow }) => {
+import Api from '../../helpers/Api';
+
+const NewChat = ({ user, show, setShow }) => {
   const [list, setList] = useState([]);
 
+  const getList = async () => {
+    if (user) {
+      const results = await Api.getContactList(user.id);
+      setList(results);
+    }
+  };
+
   useEffect(() => {
-    setList([
-      {
-        id: 1,
-        name: 'Christopher de Oliveira',
-        avatar:
-          'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg',
-      },
-      {
-        id: 2,
-        name: 'Christopher de Oliveira',
-        avatar:
-          'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg',
-      },
-      {
-        id: 3,
-        name: 'Christopher de Oliveira',
-        avatar:
-          'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg',
-      },
-      {
-        id: 4,
-        name: 'Christopher de Oliveira',
-        avatar:
-          'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg',
-      },
-    ]);
+    getList();
   }, []);
 
   return (
@@ -64,7 +48,9 @@ const NewChat = ({ /* user , */ show, setShow }) => {
 };
 
 NewChat.propTypes = {
-  user: PropTypes.shape({}).isRequired,
+  user: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+  }).isRequired,
   show: PropTypes.bool.isRequired,
   setShow: PropTypes.func.isRequired,
 };

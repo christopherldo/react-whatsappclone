@@ -18,7 +18,7 @@ MessageItem.propTypes = {
     body: PropTypes.string.isRequired,
   }).isRequired,
   user: PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
   }).isRequired,
 };
 

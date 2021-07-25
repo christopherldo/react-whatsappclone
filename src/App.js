@@ -10,102 +10,96 @@ import ChatListItem from './components/ChatListItem';
 import ChatIntro from './components/ChatIntro';
 import ChatWindow from './components/ChatWindow';
 import NewChat from './components/NewChat';
+import Login from './components/Login';
+
+import Api from './helpers/Api';
 
 const App = () => {
   const [chatList, setChatList] = useState([]);
-  const [activeChat, setActiveChat] = useState({});
-  const [user, setUser] = useState({});
+  const [activeChat, setActiveChat] = useState(null);
+  const [user, setUser] = useState(null);
   const [showNewChat, setShowNewChat] = useState(false);
 
-  useEffect(() => {
-    setChatList([
-      {
-        id: 1,
-        title: 'Fulano de Tal',
-        image:
-          'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg',
-      },
-      {
-        id: 2,
-        title: 'Fulano de Tal',
-        image:
-          'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg',
-      },
-      {
-        id: 3,
-        title: 'Fulano de Tal',
-        image:
-          'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg',
-      },
-      {
-        id: 4,
-        title: 'Fulano de Tal',
-        image:
-          'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg',
-      },
-    ]);
+  const handleLoginData = async (fbUser) => {
+    const newUser = {
+      id: fbUser.uid,
+      name: fbUser.displayName,
+      avatar: fbUser.photoURL,
+    };
 
+    await Api.addUser(newUser);
+
+    setUser(newUser);
+  };
+
+  useEffect(() => {
     setUser({
-      id: 1234,
+      id: 'xjmp2EM6jTarP5kG65mXhd4UfrP2',
       name: 'Christopher de Oliveira',
-      avatar: 'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg',
+      avatar: 'https://graph.facebook.com/1462897470753744/picture',
     });
   }, []);
 
   return (
-    <div className="app-window">
-      <div className="sidebar">
-        <NewChat user={user} show={showNewChat} setShow={setShowNewChat} />
+    <>
+      {user
+        ? (
+          <div className="app-window">
+            <div className="sidebar">
+              <NewChat user={user} show={showNewChat} setShow={setShowNewChat} />
 
-        <header>
-          <img
-            className="header--avatar"
-            src={user.avatar}
-            alt="Avatar"
-          />
+              <header>
+                <img
+                  className="header--avatar"
+                  src={user.avatar}
+                  alt="Avatar"
+                />
 
-          <div className="header--buttons">
-            <button type="button" className="header--btn">
-              <DonutLargeIcon />
-            </button>
+                <div className="header--buttons">
+                  <button type="button" className="header--btn">
+                    <DonutLargeIcon />
+                  </button>
 
-            <button type="button" className="header--btn" onClick={() => setShowNewChat(true)}>
-              <ChatIcon />
-            </button>
+                  <button type="button" className="header--btn" onClick={() => setShowNewChat(true)}>
+                    <ChatIcon />
+                  </button>
 
-            <button type="button" className="header--btn">
-              <MoreVertIcon />
-            </button>
+                  <button type="button" className="header--btn">
+                    <MoreVertIcon />
+                  </button>
+                </div>
+              </header>
+
+              <div className="search">
+                <div className="search--input">
+                  <SearchIcon />
+
+                  <input
+                    type="search"
+                    placeholder="Procurar ou começar uma nova conversa"
+                  />
+                </div>
+              </div>
+
+              <div className="chatlist">
+                {chatList.map((item) => (
+                  <ChatListItem
+                    key={item.id}
+                    data={item}
+                    onClick={() => setActiveChat(item)}
+                    active={activeChat?.id === item.id}
+                  />
+                ))}
+              </div>
+            </div>
+
+            <div className="contentarea">
+              {activeChat ? <ChatWindow user={user} /> : <ChatIntro />}
+            </div>
           </div>
-        </header>
-
-        <div className="search">
-          <div className="search--input">
-            <SearchIcon />
-
-            <input
-              type="search"
-              placeholder="Procurar ou começar uma nova conversa"
-            />
-          </div>
-        </div>
-
-        <div className="chatlist">
-          {chatList.map((item) => (
-            <ChatListItem
-              key={item.id}
-              data={item}
-              onClick={() => setActiveChat(item)}
-              active={activeChat.id === item.id}
-            />
-          ))}
-        </div>
-      </div>
-
-      <div className="contentarea">
-        {activeChat.id ? <ChatWindow user={user} /> : <ChatIntro />}
-      </div>
-    </div>
+        )
+        : <Login onReceive={handleLoginData} />}
+    </>
   );
 };
 
