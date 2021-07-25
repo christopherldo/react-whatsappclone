@@ -21,9 +21,26 @@ const Login = ({ onReceive }) => {
     }
   };
 
+  const handleGoogleLogin = async () => {
+    try {
+      const result = await Api.googlePopup();
+
+      if (result) {
+        onReceive(result.user);
+      } else {
+        // eslint-disable-next-line no-alert
+        alert('Erro desconhecido ou permissão negada, tente novamente.');
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-alert
+      alert(`${error}: ${error.message}`);
+    }
+  };
+
   return (
     <div className="login">
       <button type="button" onClick={handleFacebookLogin}>Logar com o Facebook</button>
+      <button type="button" onClick={handleGoogleLogin}>Logar com o Google</button>
     </div>
   );
 };

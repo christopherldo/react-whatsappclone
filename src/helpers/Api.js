@@ -12,6 +12,10 @@ const functions = {
     const provider = new firebase.auth.FacebookAuthProvider();
     return firebaseApp.auth().signInWithPopup(provider);
   },
+  async googlePopup() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    return firebaseApp.auth().signInWithPopup(provider);
+  },
   async addUser(user) {
     await db.collection('users').doc(user.id).set({
       name: user.name,
