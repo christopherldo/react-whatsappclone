@@ -40,6 +40,8 @@ const App = () => {
     });
   }, []);
 
+  useEffect(() => (user ? Api.onChatList(user.id, setChatList) : null), [user]);
+
   return (
     <>
       {user
@@ -84,7 +86,7 @@ const App = () => {
               <div className="chatlist">
                 {chatList.map((item) => (
                   <ChatListItem
-                    key={item.id}
+                    key={item.chat_id}
                     data={item}
                     onClick={() => setActiveChat(item)}
                     active={activeChat?.id === item.id}

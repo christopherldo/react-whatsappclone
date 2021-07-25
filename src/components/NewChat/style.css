@@ -65,6 +65,9 @@
     padding: 15px;
     cursor: pointer;
     transition: all 0.3s ease-in-out 0s;
+    width: 100%;
+    background-color: transparent;
+    border: 0;
 }
 
 .newChat--item:hover {

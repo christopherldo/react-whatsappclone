@@ -16,6 +16,11 @@ const NewChat = ({ user, show, setShow }) => {
     }
   };
 
+  const addNewChat = async (chatUser) => {
+    await Api.addNewChat(user, chatUser);
+    setShow(false);
+  };
+
   useEffect(() => {
     getList();
   }, []);
@@ -32,7 +37,7 @@ const NewChat = ({ user, show, setShow }) => {
 
       <div className="newChat--list">
         {list.map((item) => (
-          <div className="newChat--item" key={item.id}>
+          <button type="button" onClick={() => addNewChat(item)} className="newChat--item" key={item.id}>
             <img
               className="newChat--itemavatar"
               src={item.avatar}
@@ -40,7 +45,7 @@ const NewChat = ({ user, show, setShow }) => {
             />
 
             <div className="newChat--itemname">{item.name}</div>
-          </div>
+          </button>
         ))}
       </div>
     </div>
