@@ -32,14 +32,6 @@ const App = () => {
     setUser(newUser);
   };
 
-  useEffect(() => {
-    setUser({
-      id: 'xjmp2EM6jTarP5kG65mXhd4UfrP2',
-      name: 'Christopher de Oliveira',
-      avatar: 'https://graph.facebook.com/1462897470753744/picture',
-    });
-  }, []);
-
   useEffect(() => (user ? Api.onChatList(user.id, setChatList) : null), [user]);
 
   return (

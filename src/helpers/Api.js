@@ -67,6 +67,15 @@ const functions = {
         const data = doc.data();
 
         if (data.chats) {
+          const chats = [...data.chats];
+
+          chats.sort((a, b) => {
+            if (a.last_message_date === undefined) return -1;
+            if (b.last_message_date === undefined) return 1;
+
+            return a.last_message_date.seconds < b.last_message_date.seconds ? 1 : -1;
+          });
+
           setChatList(data.chats);
         }
       }
