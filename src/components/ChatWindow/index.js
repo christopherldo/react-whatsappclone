@@ -13,7 +13,9 @@ import SendIcon from '@material-ui/icons/Send';
 
 import MessageItem from '../MessageItem';
 
-const ChatWindow = ({ user }) => {
+import Api from '../../helpers/Api';
+
+const ChatWindow = ({ user, data }) => {
   let recognition;
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (SpeechRecognition) recognition = new SpeechRecognition();
@@ -25,13 +27,22 @@ const ChatWindow = ({ user }) => {
   const [listening, setListening] = useState(false);
   const [textPlaceholder, setTextPlaceholder] = useState('');
   const [list, setList] = useState([]);
+  const [users, setUsers] = useState([]);
 
   const handleEmojiClick = (e, emojiObject) => {
     setText(text + emojiObject.emoji);
   };
 
   const handleSendClick = () => {
+    if (text) {
+      Api.sendMessage(data, user.id, 'text', text, users);
+      setText('');
+      setEmojiOpen(false);
+    }
+  };
 
+  const handleInputKeyUp = (e) => {
+    if (e.key === 'Enter') handleSendClick();
   };
 
   useEffect(() => {
@@ -39,29 +50,9 @@ const ChatWindow = ({ user }) => {
   }, [text]);
 
   useEffect(() => {
-    setList([
-      { id: 1, body: 'Aopa', author: 123 },
-      { id: 2, body: 'Bão?', author: 123 },
-      { id: 3, body: 'Bão demais sô', author: 1234 },
-      { id: 4, body: 'Aopa', author: 123 },
-      { id: 5, body: 'Bão?', author: 123 },
-      { id: 6, body: 'Bão demais sô', author: 1234 },
-      { id: 7, body: 'Aopa', author: 123 },
-      { id: 8, body: 'Bão?', author: 123 },
-      { id: 9, body: 'Bão demais sô', author: 1234 },
-      { id: 10, body: 'Aopa', author: 123 },
-      { id: 11, body: 'Bão?', author: 123 },
-      { id: 12, body: 'Bão demais sô', author: 1234 },
-      { id: 13, body: 'Aopa', author: 123 },
-      { id: 14, body: 'Bão?', author: 123 },
-      { id: 15, body: 'Bão demais sô', author: 1234 },
-      { id: 16, body: 'Aopa', author: 123 },
-      { id: 17, body: 'Bão?', author: 123 },
-      { id: 18, body: 'Bão demais sô', author: 1234 },
-      { id: 19, body: 'Aopa', author: 123 },
-      { id: 20, body: 'Bão?', author: 123 },
-    ]);
-  }, []);
+    setList([]);
+    return Api.onChatContent(data.chat_id, setList, setUsers);
+  }, [data.chat_id]);
 
   useEffect(() => {
     if (body.current.scrollHeight > body.current.offsetHeight) {
@@ -101,12 +92,12 @@ const ChatWindow = ({ user }) => {
       <div className="chatWindow--header">
         <div className="chatWindow--headerinfo">
           <img
-            src="https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg"
-            alt=""
+            src={data.image}
+            alt={data.title}
             className="chatWindow--avatar"
           />
 
-          <div className="chatWindow--name">Christopher de Oliveira</div>
+          <div className="chatWindow--name">{data.title}</div>
         </div>
 
         <div className="chatWindow--headerbuttons">
@@ -125,8 +116,9 @@ const ChatWindow = ({ user }) => {
       </div>
 
       <div ref={body} className="chatWindow--body">
-        {list.map((item) => (
-          <MessageItem key={item.id} data={item} user={user} />
+        {list.map((item, key) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <MessageItem key={key} data={item} user={user} />
         ))}
       </div>
 
@@ -171,6 +163,7 @@ const ChatWindow = ({ user }) => {
             placeholder={textPlaceholder}
             value={text}
             onChange={(e) => setText(e.target.value)}
+            onKeyUp={handleInputKeyUp}
           />
         </div>
 
@@ -193,7 +186,14 @@ const ChatWindow = ({ user }) => {
 };
 
 ChatWindow.propTypes = {
-  user: PropTypes.shape({}).isRequired,
+  data: PropTypes.shape({
+    chat_id: PropTypes.string.isRequired,
+    image: PropTypes.string,
+    title: PropTypes.string,
+  }).isRequired,
+  user: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default ChatWindow;

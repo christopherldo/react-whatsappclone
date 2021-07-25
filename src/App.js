@@ -96,7 +96,7 @@ const App = () => {
             </div>
 
             <div className="contentarea">
-              {activeChat ? <ChatWindow user={user} /> : <ChatIntro />}
+              {activeChat ? <ChatWindow user={user} data={activeChat} /> : <ChatIntro />}
             </div>
           </div>
         )

@@ -50,7 +50,7 @@ ChatListItem.propTypes = {
     title: PropTypes.string.isRequired,
     last_message: PropTypes.string,
     last_message_date: PropTypes.shape({
-      seconds: PropTypes.number,
+      seconds: PropTypes.number.isRequired,
       nanoseconds: PropTypes.number,
     }),
   }).isRequired,

@@ -72,6 +72,60 @@ const functions = {
       }
     });
   },
+  onChatContent(chatId, setList, setUsers) {
+    return db.collection('chats').doc(chatId).onSnapshot((doc) => {
+      if (doc.exists) {
+        const data = doc.data();
+
+        if (data.messages) {
+          setList(data.messages);
+          setUsers(data.users);
+        }
+      }
+    });
+  },
+  async sendMessage(chatData, userId, type, body, users) {
+    db.collection('chats').doc(chatData.chat_id).update({
+      messages: firebase.firestore.FieldValue.arrayUnion({
+        type,
+        author: userId,
+        body,
+        date: new Date(),
+      }),
+    });
+
+    const formatMessageDate = async (i) => {
+      const user = await db.collection('users').doc(users[i]).get();
+      const userData = user.data();
+
+      if (userData.chats) {
+        const chats = [...userData.chats];
+
+        // eslint-disable-next-line no-restricted-syntax
+        for (const e in chats) {
+          if (chats[e].chat_id === chatData.chat_id) {
+            chats[e].last_message = body;
+            chats[e].last_message_date = new Date();
+          }
+        }
+
+        await db.collection('users').doc(users[i]).update({
+          chats,
+        });
+      }
+    };
+
+    const promises = [];
+
+    // eslint-disable-next-line no-restricted-syntax
+    for (const user in users) {
+      if (user) {
+        formatMessageDate(user);
+      }
+    }
+
+    await Promise.all(promises);
+  },
 };
 
 export default functions;
