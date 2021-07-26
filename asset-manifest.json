@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/react-whatsappclone/static/css/main.6cc7f9b3.chunk.css",
-    "main.js": "/react-whatsappclone/static/js/main.4b27ba0f.chunk.js",
-    "main.js.map": "/react-whatsappclone/static/js/main.4b27ba0f.chunk.js.map",
+    "main.js": "/react-whatsappclone/static/js/main.69d27c8e.chunk.js",
+    "main.js.map": "/react-whatsappclone/static/js/main.69d27c8e.chunk.js.map",
     "runtime-main.js": "/react-whatsappclone/static/js/runtime-main.c6cddfe4.js",
     "runtime-main.js.map": "/react-whatsappclone/static/js/runtime-main.c6cddfe4.js.map",
     "static/js/2.3e122d01.chunk.js": "/react-whatsappclone/static/js/2.3e122d01.chunk.js",
@@ -15,6 +15,6 @@
     "static/js/runtime-main.c6cddfe4.js",
     "static/js/2.3e122d01.chunk.js",
     "static/css/main.6cc7f9b3.chunk.css",
-    "static/js/main.4b27ba0f.chunk.js"
+    "static/js/main.69d27c8e.chunk.js"
   ]
 }
