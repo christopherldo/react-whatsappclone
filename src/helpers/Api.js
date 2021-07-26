@@ -48,11 +48,14 @@ const functions = {
 
     if (result.exists) {
       const data = result.data();
-      const chat = data.chats.find((chatObject) => chatObject.with === userChat.id);
 
-      if (chat) {
-        setActiveChat(chat);
-        return;
+      if (data.chats) {
+        const chat = data.chats.find((chatObject) => chatObject.with === userChat.id);
+
+        if (chat) {
+          setActiveChat(chat);
+          return;
+        }
       }
 
       const newChat = await db.collection('chats').add({

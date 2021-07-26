@@ -2,7 +2,12 @@ import React from 'react';
 import './style.css';
 
 const ChatIntro = () => (
-  <div className="chatIntro">
+  <div
+    className="chatIntro"
+    style={{
+      height: '100%', backgroundColor: '#f8f9fa', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', borderBottom: '1px solid #4adf83',
+    }}
+  >
     <img
       src="https://web.whatsapp.com/img/intro-connection-hq-light_9466a20e6d2921a21ac7ab82419be157.jpg"
       alt="Whatsapp Connected"
